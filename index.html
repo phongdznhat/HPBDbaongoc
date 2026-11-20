@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🎀 Happy 16th Birthday – Bảo Ngọc</title>
+
+    <!-- Google Fonts hỗ trợ tiếng Việt mượt mà -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Pacifico&family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Thư viện hiệu ứng pháo giấy confetti (CDN siêu nhẹ) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <!-- File định dạng giao diện CSS -->
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- =====================================================
+       HIỆU ỨNG NỀN ĐỘNG TRÁI TIM & NGÔI SAO LẤP LÁNH
+  ===================================================== -->
+    <div class="hearts-bg" id="heartsBg" aria-hidden="true"></div>
+
+    <div class="sparkle" style="top: 7%; left: 6%; animation-delay: 0s">✨</div>
+    <div class="sparkle" style="top: 14%; right: 7%; animation-delay: 0.8s">
+      🌟
+    </div>
+    <div class="sparkle" style="top: 62%; left: 4%; animation-delay: 1.5s">
+      ✨
+    </div>
+    <div class="sparkle" style="top: 76%; right: 6%; animation-delay: 0.4s">
+      💫
+    </div>
+    <div class="sparkle" style="top: 42%; right: 3%; animation-delay: 1.1s">
+      ✨
+    </div>
+
+    <!-- =====================================================
+       NÚT BẬT / TẮT ÂM THANH (CỐ ĐỊNH GÓC PHẢI DƯỚI)
+  ===================================================== -->
+    <button id="musicBtn" title="Bật/tắt nhạc" aria-label="Bật tắt nhạc">
+      🔇
+    </button>
+
+    <!-- =====================================================
+       GIAI ĐOẠN 1 – PHONG BÌ CHỜ MỞ
+  ===================================================== -->
+    <section id="stage1" class="stage active" aria-label="Phong bì sinh nhật">
+      <div class="envelope-wrapper">
+        <div
+          class="envelope"
+          id="envelopeEl"
+          role="button"
+          tabindex="0"
+          aria-label="Nhấn để mở phong bì"
+        >
+          <!-- Nắp phong bì -->
+          <div class="env-flap" aria-hidden="true"></div>
+          <!-- Thân phong bì -->
+          <div class="env-body" aria-hidden="true"></div>
+          <!-- Tiêu đề trên phong bì -->
+          <div class="env-content">
+            <span class="env-to">💌 Gửi Bảo Ngọc</span>
+            <div class="env-title">Happy<br />16th Birthday</div>
+          </div>
+          <!-- Dấu xi sáp BN -->
+          <div class="wax-seal" aria-hidden="true">BN</div>
+        </div>
+
+        <p class="stage1-desc">Bấm vào phong bì để mở thiệp 🎀</p>
+
+        <button class="btn-open" id="openBtn">Chạm để mở thiệp ✨</button>
+      </div>
+    </section>
+
+    <!-- =====================================================
+       GIAI ĐOẠN 2 – ẢNH POLAROID + PHÁT NHẠC + 5 GIÂY ĐẾM NGƯỢC
+  ===================================================== -->
+    <section id="stage2" class="stage" aria-label="Ảnh sinh nhật">
+      <h1 class="s2-title">🎂 Happy 16th Birthday,<br />Bảo Ngọc!</h1>
+
+      <div class="polaroid" role="img" aria-label="Khung ảnh Bảo Ngọc">
+        <!--
+        ╔══════════════════════════════════════════════════╗
+        ║  📸 THAY LINK ẢNH CỦA BẢO NGỌC TẠI ĐÂY         ║
+        ║  Đổi giá trị thuộc tính src="" bên dưới:        ║
+        ║  - Link ảnh online: "https://...ten-anh.jpg"     ║
+        ║  - File ảnh cùng thư mục: "./bao-ngoc.jpg"       ║
+        ╚══════════════════════════════════════════════════╝
+      -->
+        <img
+          src="4f0d470dc8e64f8eba1e4f746236a041.webp"
+          alt="Ảnh Bảo Ngọc"
+          loading="eager"
+        />
+        <p class="polaroid-caption">Bảo Ngọc 🌸</p>
+      </div>
+
+      <p class="s2-sub">✨ Chúc em tuổi 16 thật rực rỡ và ngọt ngào!</p>
+
+      <!-- Thanh tiến trình tự động 5 giây -->
+      <div
+        class="progress-wrap"
+        aria-label="Thời gian chờ chuyển tiếp"
+        title="Tự động chuyển sau 5 giây"
+      >
+        <div id="progressFill"></div>
+      </div>
+
+      <div class="s2-actions">
+        <button class="btn-primary-sm" id="readLetterBtn">
+          Đọc thư ngay 💌
+        </button>
+      </div>
+    </section>
+
+    <!-- =====================================================
+       GIAI ĐOẠN 3 – BỨC THƯ TÌNH CẢM TUỔI 16
+  ===================================================== -->
+    <section id="stage3" class="stage" aria-label="Bức thư sinh nhật">
+      <div class="letter-paper">
+        <div class="letter-header">
+          <div class="letter-header-title">💌 Thư Gửi Bảo Ngọc</div>
+          <div class="letter-date" id="letterDate"></div>
+        </div>
+
+        <div class="letter-body" id="letterBody">
+          <!-- Nội dung thư được tạo và render với hiệu ứng fade-in từng dòng từ file script.js -->
+        </div>
+
+        <p class="signature" id="signature">— Phong Vũ 🎀</p>
+
+        <div class="letter-actions">
+          <button class="btn-secondary" id="backToPhotoBtn">
+            ← Xem lại ảnh
+          </button>
+          <button
+            class="btn-secondary"
+            id="restartBtn"
+            style="border-color: var(--text-light); color: var(--text-light)"
+          >
+            🔄 Phát lại từ đầu
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+       THẺ AUDIO – NHẠC NỀN CHÚC MỪNG SINH NHẬT
+  ===================================================== -->
+    <!--
+    ╔══════════════════════════════════════════════════════╗
+    ║  🎵 THAY LINK NHẠC SINH NHẬT TẠI ĐÂY                ║
+    ║  Đổi src="" trong thẻ <source> thành:                ║
+    ║  - Link nhạc online: "https://...bai-hat.mp3"        ║
+    ║  - File cùng thư mục: "./happy-birthday.mp3"         ║
+    ║                                                      ║
+    ║  Gợi ý tải nhạc mp3 miễn phí tại:                    ║
+    ║  https://pixabay.com/music/search/happy%20birthday/  ║
+    ╚══════════════════════════════════════════════════════╝
+  -->
+    <audio id="bgMusic" src="music.mp3" loop preload="auto">
+      <source src="music.mp3" type="audio/mpeg" />
+      <source src="Happy Birthday To You.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- File điều khiển tương tác JavaScript -->
+    <script src="./script.js"></script>
+  </body>
+</html>
